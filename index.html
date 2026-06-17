@@ -6,30 +6,43 @@
     <title>สไลด์นำเสนอ: การสร้างทางเรขาคณิต (Interactive)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;700&family=Mali:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;500;700&family=Mali:wght@400;500;600&family=Krub:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         /* Base Setup and Reset */
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
-            background-color: #1e293b;
+            /* Cute Polka Dot Background */
+            background-color: #fdf2f8; 
+            background-image: radial-gradient(#fbcfe8 2px, transparent 2px);
+            background-size: 40px 40px;
             font-family: 'Mali', cursive;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
             overflow: hidden;
-            color: #334155;
+            color: #475569; /* Soft dark text */
         }
+
+        /* Cute Floating Animation */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+            100% { transform: translateY(0px); }
+        }
+        .cute-float { animation: float 6s ease-in-out infinite; }
+        .cute-float-delay { animation: float 7s ease-in-out infinite 2s; }
 
         /* Presentation Wrapper */
         .presentation {
             position: relative;
             width: 1280px;
             height: 720px;
-            background: #f8fafc;
-            border-radius: 12px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            background: rgba(255, 255, 255, 0.95);
+            border: 8px solid white;
+            border-radius: 40px; /* Softer radius */
+            box-shadow: 0 25px 50px -12px rgba(244, 114, 182, 0.3); /* Pink shadow */
             overflow: hidden;
             transform-origin: center;
         }
@@ -44,104 +57,149 @@
             justify-content: center;
             align-items: center;
             opacity: 0;
-            transform: scale(0.95);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-            pointer-events: none; /* Disable interaction when hidden */
+            transform: scale(0.92) translateY(20px);
+            transition: all 0.5s ease-out; /* Smooth transition without bounce */
+            pointer-events: none;
             z-index: 1;
         }
 
         .slide.active {
             opacity: 1;
-            transform: scale(1);
+            transform: scale(1) translateY(0);
             pointer-events: auto;
             z-index: 10;
         }
 
-        /* Background Decorations */
+        /* Cute Pastel Background Decorations */
         .bg-blob {
-            position: absolute; border-radius: 50%; filter: blur(80px); opacity: 0.6; z-index: -1;
+            position: absolute; border-radius: 50%; filter: blur(60px); opacity: 0.7; z-index: -1;
         }
-        .bg-1 { top: -100px; left: -100px; width: 400px; height: 400px; background: #dcfd8b; }
-        .bg-2 { bottom: -150px; right: -100px; width: 500px; height: 500px; background: #bc84ee; }
-        .bg-3 { top: 20%; right: 10%; width: 300px; height: 300px; background: #ff823a; }
+        .bg-1 { top: -100px; left: -100px; width: 450px; height: 450px; background: #fce7f3; } /* Pink */
+        .bg-2 { bottom: -150px; right: -100px; width: 550px; height: 550px; background: #e0e7ff; } /* Indigo */
+        .bg-3 { top: 20%; right: 10%; width: 350px; height: 350px; background: #dcfce7; } /* Mint */
 
         /* Typography */
-        h1, h2, h3 { font-family: 'Comfortaa', cursive; color: #1e293b; font-weight: 700; text-align: center; }
-        h1 { font-size: 80px; margin-bottom: 20px; }
-        h2.slide-title { font-size: 36px; margin-bottom: 20px; text-align: left; width: 100%; }
-        p, li { font-size: 22px; line-height: 1.5; }
+        h1, h2, h3 { font-family: 'Comfortaa', cursive; color: #334155; font-weight: 700; text-align: center; }
+        h1 { font-size: 80px; margin-bottom: 20px; color: #ec4899; text-shadow: 3px 3px 0px #fbcfe8; }
+        h2.slide-title { font-size: 40px; margin-bottom: 20px; text-align: left; width: 100%; color: #8b5cf6; display: flex; align-items: center; gap: 15px; }
+        p, li { font-size: 24px; line-height: 1.6; }
 
         /* Layouts */
         .content-area { width: 100%; flex-grow: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; }
         .two-column { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; width: 100%; align-items: center; }
         
-        /* แก้ไข Grid Layout ของสไลด์ที่ 7 ให้แสดงเป็น 3 แนวนอนเสมอ */
         .tiled-content { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; width: 100%; align-items: stretch; }
-        .tile { background: white; padding: 30px 20px; border-radius: 30px; text-align: center; box-shadow: 0 8px 15px rgba(0,0,0,0.05); display: flex; flex-direction: column; justify-content: flex-start; }
-        .tile i { font-size: 60px; margin-bottom: 15px; display: block; font-weight: bold; font-family: 'Comfortaa', cursive; font-style: italic; }
+        .tile { 
+            background: white; 
+            padding: 40px 20px; 
+            border-radius: 40px; 
+            text-align: center; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05); 
+            display: flex; flex-direction: column; justify-content: flex-start;
+            border: 4px solid transparent;
+            transition: transform 0.3s ease;
+        }
+        .tile:hover { transform: translateY(-10px); }
+        .tile i { font-size: 70px; margin-bottom: 20px; display: block; font-weight: bold; font-family: 'Comfortaa', cursive; }
 
         /* Custom Interactive Elements */
         
         /* 1. Quiz Styles */
         .quiz-container { width: 100%; max-width: 900px; }
-        .quiz-item { background: white; padding: 20px 30px; border-radius: 20px; margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); display: flex; flex-direction: column; gap: 15px; }
-        .quiz-question { font-weight: 600; font-size: 26px; }
-        .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .quiz-btn { background: #e2e8f0; border: none; padding: 15px; border-radius: 10px; font-family: inherit; font-size: 20px; cursor: pointer; transition: 0.2s; text-align: left; }
-        .quiz-btn:hover { background: #cbd5e1; }
-        .quiz-btn.correct { background: #10b981; color: white; font-weight: bold; }
-        .quiz-btn.wrong { background: #ef4444; color: white; opacity: 0.7; }
-        .reveal-btn { background: #ff823a; color: white; border: none; padding: 10px 20px; border-radius: 20px; font-family: inherit; font-size: 18px; cursor: pointer; align-self: flex-start; margin-top: 10px; }
-        .reveal-btn:hover { background: #e66a2a; }
+        .quiz-item { 
+            background: white; padding: 30px; border-radius: 30px; margin-bottom: 20px; 
+            box-shadow: 0 10px 30px rgba(139, 92, 246, 0.1); display: flex; flex-direction: column; gap: 20px; 
+            border: 3px dashed #ddd6fe;
+        }
+        .quiz-question { font-weight: 600; font-size: 28px; color: #4c1d95; }
+        .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .quiz-btn { 
+            background: #f1f5f9; border: 2px solid transparent; padding: 15px 25px; 
+            border-radius: 20px; font-family: inherit; font-size: 22px; cursor: pointer; 
+            transition: all 0.2s; text-align: left; color: #475569;
+        }
+        .quiz-btn:hover { background: #e2e8f0; transform: scale(1.02); }
+        .quiz-btn.correct { background: #d1fae5; color: #065f46; border-color: #34d399; font-weight: bold; }
+        .quiz-btn.wrong { background: #ffe4e6; color: #9f1239; border-color: #fb7185; opacity: 0.8; }
+        
+        .reveal-btn { 
+            background: #f472b6; color: white; border: none; padding: 12px 30px; 
+            border-radius: 30px; font-family: inherit; font-size: 20px; font-weight: bold;
+            cursor: pointer; align-self: flex-start; margin-top: 10px;
+            box-shadow: 0 4px 0 #db2777; transition: all 0.1s;
+        }
+        .reveal-btn:active { transform: translateY(4px); box-shadow: none; }
 
         /* 2. Chocolate Animation Styles */
-        .interactive-board { background: white; width: 100%; height: 260px; border-radius: 30px; border: 4px dashed #bc84ee; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; margin-top: 10px; }
-        .choco-wrapper { display: flex; width: 600px; max-width: 90%; height: 80px; gap: 2px; transition: all 0.5s ease; }
-        .choco-piece { background: #5c2e00; border: 2px solid #3e1f00; border-radius: 8px; flex: 1; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.3); font-family: 'Comfortaa'; font-size: 20px; font-weight: bold; }
-        /* Choco block styling */
-        .choco-piece::before { content: ''; position: absolute; top: 8px; left: 8px; right: 8px; bottom: 8px; border: 2px solid rgba(0,0,0,0.2); border-radius: 4px; }
+        .interactive-board { 
+            background: #fffbeb; width: 100%; height: 260px; border-radius: 40px; 
+            border: 4px dashed #fcd34d; display: flex; flex-direction: column; 
+            align-items: center; justify-content: center; position: relative; margin-top: 10px; 
+        }
+        .choco-wrapper { display: flex; width: 600px; max-width: 90%; height: 90px; gap: 2px; transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+        .choco-piece { 
+            background: #78350f; border: 3px solid #451a03; border-radius: 12px; 
+            flex: 1; position: relative; overflow: hidden; display: flex; align-items: center; justify-content: center; 
+            color: rgba(255,255,255,0.4); font-family: 'Comfortaa'; font-size: 22px; font-weight: bold; 
+            box-shadow: inset 0 4px 0 rgba(255,255,255,0.1);
+        }
+        .choco-piece::before { content: ''; position: absolute; top: 8px; left: 8px; right: 8px; bottom: 8px; border: 2px solid rgba(0,0,0,0.3); border-radius: 6px; }
         
-        .choco-controls { margin-top: 20px; display: flex; gap: 20px; }
-        .btn-action { background: #bc84ee; color: white; border: none; padding: 12px 25px; border-radius: 30px; font-family: inherit; font-size: 20px; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 0 #9333ea; }
-        .btn-action:hover { transform: translateY(2px); box-shadow: 0 2px 0 #9333ea; }
-        .btn-action:active { transform: translateY(4px); box-shadow: none; }
+        .choco-controls { margin-top: 25px; display: flex; gap: 20px; }
+        .btn-action { 
+            background: #a78bfa; color: white; border: none; padding: 15px 30px; 
+            border-radius: 30px; font-family: inherit; font-size: 22px; font-weight: bold;
+            cursor: pointer; transition: 0.2s; box-shadow: 0 5px 0 #7c3aed; 
+        }
+        .btn-action:hover { transform: translateY(2px); box-shadow: 0 3px 0 #7c3aed; filter: brightness(1.1); }
+        .btn-action:active { transform: translateY(5px); box-shadow: none; }
 
         /* Images */
-        .image-wrapper { border-radius: 30px; overflow: hidden; box-shadow: 0 8px 16px rgba(0,0,0,0.1); height: 350px; background: white; display: flex; justify-content: center; align-items: center; }
-        .image-wrapper img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .image-wrapper { 
+            border-radius: 40px; overflow: hidden; box-shadow: 0 15px 30px rgba(0,0,0,0.08); 
+            height: 350px; background: white; display: flex; justify-content: center; align-items: center; 
+            border: 8px solid white;
+        }
+        .image-wrapper img { width: 100%; height: 100%; object-fit: cover; }
 
         /* Navigation Controls */
         .nav-controls {
             position: absolute;
-            bottom: 20px;
+            bottom: 25px;
             left: 0; right: 0;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 40px;
+            padding: 0 50px;
             z-index: 100;
         }
         .nav-btn {
-            background: rgba(30, 41, 59, 0.1);
+            background: white;
             border: none;
-            width: 60px; height: 60px;
+            width: 65px; height: 65px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 24px;
-            color: #1e293b;
+            font-size: 28px;
+            color: #ec4899;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
             transition: all 0.2s;
             display: flex; justify-content: center; align-items: center;
         }
-        .nav-btn:hover { background: #1e293b; color: white; }
-        .slide-counter { font-family: 'Comfortaa', cursive; font-size: 20px; font-weight: 700; color: #64748b; }
-        .progress-bar { position: absolute; bottom: 0; left: 0; height: 6px; background: #bc84ee; width: 0%; transition: width 0.3s; z-index: 100; }
+        .nav-btn:hover { background: #fdf2f8; transform: scale(1.1) rotate(5deg); }
+        .nav-btn:active { transform: scale(0.95); }
+        .slide-counter { font-family: 'Comfortaa', cursive; font-size: 22px; font-weight: 700; color: #94a3b8; background: white; padding: 10px 25px; border-radius: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        
+        /* Cute Striped Progress Bar */
+        .progress-bar { 
+            position: absolute; bottom: 0; left: 0; height: 12px; 
+            background: repeating-linear-gradient(45deg, #f472b6, #f472b6 10px, #fb7185 10px, #fb7185 20px); 
+            width: 0%; transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); z-index: 100; border-top-right-radius: 10px; border-bottom-right-radius: 10px;
+        }
 
-        /* Specific slide colors */
-        .bg-color-1 { background-color: #dcfd8b; }
-        .bg-color-2 { background-color: #bc84ee; color: white; }
-        .bg-color-2 h2, .bg-color-2 p { color: white; }
-        .bg-color-3 { background-color: #ff823a; color: white; }
-        .bg-color-3 h2, .bg-color-3 p { color: white; }
+        /* Specific slide colors - softer versions */
+        .bg-color-1 { background-color: #fef3c7; } /* Soft Yellow */
+        .bg-color-2 { background-color: #f3e8ff; } /* Soft Purple */
+        .bg-color-3 { background-color: #e0f2fe; } /* Soft Sky Blue */
     </style>
 </head>
 <body>
@@ -153,9 +211,9 @@
 
         <!-- Slide 1: Title -->
         <div class="slide active bg-color-1">
-            <h1>การสร้างทางเรขาคณิต</h1>
-            <p style="font-size: 36px; font-weight: bold; margin-bottom: 10px;">การแบ่งส่วนของเส้นตรง</p>
-            <p style="font-size: 24px; background: white; padding: 10px 30px; border-radius: 30px; border: 2px solid #1e293b;">วิชาคณิตศาสตร์ ชั้นมัธยมศึกษาปีที่ 1</p>
+            <h1 class="cute-float">การสร้างทางเรขาคณิต ✨</h1>
+            <p style="font-size: 42px; font-weight: bold; margin-bottom: 20px; color: #8b5cf6;">การแบ่งส่วนของเส้นตรง</p>
+            <p style="font-size: 26px; background: white; padding: 15px 40px; border-radius: 40px; box-shadow: 0 8px 0 #fde68a; color: #d97706; font-weight: bold;">วิชาคณิตศาสตร์ ชั้นมัธยมศึกษาปีที่ 1 🎒</p>
         </div>
 
         <!-- Slide 2: Pre-test -->
@@ -172,7 +230,7 @@
                             <button class="quiz-btn" data-correct="true">ค. วงเวียนและสันตรง</button>
                             <button class="quiz-btn">ง. สายวัด</button>
                         </div>
-                        <button class="reveal-btn" onclick="revealAnswer('pre-q1')">ดูเฉลย</button>
+                        <button class="reveal-btn" onclick="revealAnswer('pre-q1')">✨ ดูเฉลย</button>
                     </div>
                 </div>
             </div>
@@ -182,19 +240,19 @@
         <div class="slide">
             <h2 class="slide-title">ชวนคิด: จะแบ่งช็อกโกแลตอย่างไรดี? 🍫</h2>
             <div class="content-area">
-                <p style="margin-bottom: 10px;">"ถ้านักเรียนมีช็อกโกแลต 1 แท่งยาวๆ ต้องการแบ่งให้เพื่อน 4 คนเท่าๆ กัน โดยไม่มีไม้บรรทัด..."</p>
+                <p style="margin-bottom: 15px; font-size: 26px;">"ถ้านักเรียนมีช็อกโกแลต 1 แท่งยาวๆ ต้องการแบ่งให้เพื่อน 4 คนเท่าๆ กัน โดยไม่มีไม้บรรทัด..."</p>
                 
                 <div class="interactive-board">
-                    <div class="choco-wrapper" id="choco-board">
+                    <div class="choco-wrapper cute-float" id="choco-board">
                         <div class="choco-piece">Chocolate</div>
                     </div>
                     
                     <div class="choco-controls">
-                        <button class="btn-action" onclick="splitChocolate()">หักครึ่ง!</button>
-                        <button class="btn-action" style="background:#64748b; box-shadow: 0 4px 0 #475569;" onclick="resetChocolate()">เริ่มใหม่</button>
+                        <button class="btn-action" onclick="splitChocolate()">🔪 หักครึ่ง!</button>
+                        <button class="btn-action" style="background:#94a3b8; box-shadow: 0 5px 0 #64748b;" onclick="resetChocolate()">🔄 เริ่มใหม่</button>
                     </div>
                 </div>
-                <p style="margin-top: 15px; color: #ff823a; font-weight: bold;">การหักครึ่งช็อกโกแลต ก็เหมือนการใช้ "วงเวียน" แบ่งครึ่งเส้นตรง!</p>
+                <p style="margin-top: 20px; color: #ec4899; font-weight: bold; background: white; padding: 10px 30px; border-radius: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">💡 การหักครึ่งช็อกโกแลต ก็เหมือนการใช้ "วงเวียน" แบ่งครึ่งเส้นตรง!</p>
             </div>
         </div>
 
@@ -204,17 +262,17 @@
             <div class="content-area two-column">
                 <div>
                     <ul style="list-style: none;">
-                        <li style="margin-bottom: 30px; background: white; padding: 20px; border-radius: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-                            <i class="fa-solid fa-compass" style="color: #ff823a; font-size: 30px; margin-right: 15px;"></i>
-                            <strong>วงเวียน (Compass):</strong> ใช้สร้างส่วนโค้งและกำหนดระยะ
+                        <li style="margin-bottom: 30px; background: white; padding: 25px; border-radius: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); border: 3px solid #fbcfe8;">
+                            <i class="fa-solid fa-compass" style="color: #f472b6; font-size: 35px; margin-right: 15px;"></i>
+                            <strong style="color: #db2777;">วงเวียน (Compass):</strong> <br>ใช้สร้างส่วนโค้งและกำหนดระยะ
                         </li>
-                        <li style="margin-bottom: 30px; background: white; padding: 20px; border-radius: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.05);">
-                            <i class="fa-solid fa-ruler" style="color: #bc84ee; font-size: 30px; margin-right: 15px;"></i>
-                            <strong>สันตรง (Straightedge):</strong> ใช้ลากเส้นตรง (ใช้ไม้บรรทัดแต่ไม่ใช้สเกลตัวเลข)
+                        <li style="margin-bottom: 30px; background: white; padding: 25px; border-radius: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); border: 3px solid #c4b5fd;">
+                            <i class="fa-solid fa-ruler" style="color: #a78bfa; font-size: 35px; margin-right: 15px;"></i>
+                            <strong style="color: #7c3aed;">สันตรง (Straightedge):</strong> <br>ใช้ลากเส้นตรง (ใช้ไม้บรรทัดแต่ไม่ใช้สเกลตัวเลข)
                         </li>
                     </ul>
                 </div>
-                <div class="image-wrapper">
+                <div class="image-wrapper cute-float" style="border-color: #fdf2f8;">
                      <img src="https://i.ytimg.com/vi/hkQ9A0C4vPA/maxresdefault.jpg" alt="วงเวียน">
                 </div>
             </div>
@@ -224,12 +282,12 @@
         <div class="slide">
             <h2 class="slide-title">ทำไมไม่ใช้ไม้บรรทัดวัดเอาเลยล่ะ? 🤔</h2>
             <div class="content-area two-column">
-                <div style="background: white; border: 4px solid #ff823a; padding: 40px; border-radius: 30px; height: 100%;">
-                    <h3 style="margin-bottom: 20px;">การวัดด้วยตัวเลข</h3>
+                <div style="background: white; border: 5px dashed #f87171; padding: 40px; border-radius: 40px; height: 100%; box-shadow: 0 10px 20px rgba(248,113,113,0.1);">
+                    <h3 style="margin-bottom: 20px; color: #ef4444; font-size: 30px;">❌ การวัดด้วยตัวเลข</h3>
                     <p>สเกลไม้บรรทัดอาจมีความคลาดเคลื่อนทางสายตา หรือเส้นมีความยาวเป็นทศนิยมไม่รู้จบ ทำให้ไม่สามารถหาจุดกึ่งกลางที่เป๊ะ 100% ได้</p>
                 </div>
-                <div style="background: white; border: 4px solid #10b981; padding: 40px; border-radius: 30px; height: 100%;">
-                    <h3 style="margin-bottom: 20px;">การใช้วงเวียน</h3>
+                <div style="background: white; border: 5px dashed #34d399; padding: 40px; border-radius: 40px; height: 100%; box-shadow: 0 10px 20px rgba(52,211,153,0.1);">
+                    <h3 style="margin-bottom: 20px; color: #10b981; font-size: 30px;">✅ การใช้วงเวียน</h3>
                     <p>อาศัยคุณสมบัติของจุดตัดส่วนโค้ง ที่อยู่ห่างจากปลายเส้นตรงทั้งสองข้างเท่ากันเสมอ ทำให้แบ่งครึ่งได้แม่นยำตามหลักคณิตศาสตร์อย่างแท้จริง!</p>
                 </div>
             </div>
@@ -237,25 +295,25 @@
 
         <!-- Slide 6: Section Title -->
         <div class="slide bg-color-2">
-            <h2>4 ขั้นตอนง่ายๆ</h2>
-            <p style="font-size: 36px; margin-top: 20px;">การแบ่งครึ่งส่วนของเส้นตรง</p>
+            <h2 style="color: #7c3aed;">4 ขั้นตอนง่ายๆ 🌸</h2>
+            <p style="font-size: 46px; margin-top: 20px; font-weight: bold; color: #4c1d95; background: white; padding: 20px 50px; border-radius: 50px; box-shadow: 0 10px 0 #ddd6fe;">การแบ่งครึ่งส่วนของเส้นตรง</p>
         </div>
 
         <!-- Slide 7: Steps 1-3 -->
         <div class="slide">
             <h2 class="slide-title">กางวงเวียนสร้างจุดตัด 🎯</h2>
             <div class="content-area tiled-content">
-                <div class="tile" style="border-top: 10px solid #ff823a;">
-                    <i style="color: #ff823a;">1</i>
-                    <p>กำหนดส่วนของเส้นตรง AB</p>
+                <div class="tile" style="border: 5px solid #fcd34d; background: #fffbeb;">
+                    <i style="color: #f59e0b;">1</i>
+                    <p style="color: #b45309;">กำหนดส่วนของเส้นตรง AB</p>
                 </div>
-                <div class="tile" style="border-top: 10px solid #bc84ee;">
-                    <i style="color: #bc84ee;">2</i>
-                    <p>ใช้จุด A เป็นศูนย์กลาง กางวงเวียน <br><b>"เกินครึ่งหนึ่ง"</b><br> ขีดส่วนโค้งบน-ล่าง</p>
+                <div class="tile" style="border: 5px solid #fbcfe8; background: #fdf2f8;">
+                    <i style="color: #ec4899;">2</i>
+                    <p style="color: #be185d;">ใช้จุด A เป็นศูนย์กลาง กางวงเวียน <br><b style="font-size: 28px; color: #9d174d;">"เกินครึ่งหนึ่ง"</b><br> ขีดส่วนโค้งบน-ล่าง</p>
                 </div>
-                <div class="tile" style="border-top: 10px solid #10b981;">
+                <div class="tile" style="border: 5px solid #a7f3d0; background: #ecfdf5;">
                     <i style="color: #10b981;">3</i>
-                    <p>ใช้จุด B เป็นศูนย์กลาง รัศมี <b>"เท่าเดิม"</b><br> ขีดส่วนโค้งตัดกัน</p>
+                    <p style="color: #047857;">ใช้จุด B เป็นศูนย์กลาง รัศมี <b style="font-size: 28px; color: #064e3b;">"เท่าเดิม"</b><br> ขีดส่วนโค้งตัดกัน</p>
                 </div>
             </div>
         </div>
@@ -265,63 +323,65 @@
             <h2 class="slide-title">ขั้นที่ 4: ลากเส้นผ่านจุดตัด ✏️</h2>
             <div class="content-area two-column">
                 <div>
-                    <p style="font-size: 28px; margin-bottom: 20px;">เมื่อส่วนโค้งจาก A และ B ตัดกัน จะเกิดจุดตัด 2 จุด (บนและล่าง)</p>
-                    <p style="font-size: 28px; background: #dcfd8b; padding: 20px; border-radius: 20px;">ใช้สันตรง ลากเส้นเชื่อมจุดตัดทั้งสอง เส้นนี้จะแบ่งครึ่งเส้นตรง AB <b>พอดีเป๊ะ!</b></p>
+                    <p style="font-size: 28px; margin-bottom: 25px; color: #334155;">เมื่อส่วนโค้งจาก A และ B ตัดกัน จะเกิดจุดตัด 2 จุด (บนและล่าง)</p>
+                    <p style="font-size: 28px; background: #fef08a; padding: 30px; border-radius: 30px; color: #854d0e; font-weight: bold; box-shadow: 0 8px 20px rgba(0,0,0,0.05); border: 4px dashed #facc15;">ใช้สันตรง ลากเส้นเชื่อมจุดตัดทั้งสอง เส้นนี้จะแบ่งครึ่งเส้นตรง AB <b>พอดีเป๊ะ! ✨</b></p>
                 </div>
-                <div class="image-wrapper" style="height: 400px; border: 4px solid #1e293b;">
+                <div class="image-wrapper cute-float" style="height: 400px; border: 6px solid #e2e8f0; border-radius: 50px;">
                     <img src="https://i.ytimg.com/vi/jQyLz1K3dwA/hq720.jpg" alt="เส้นแบ่งครึ่งตั้งฉาก">
                 </div>
             </div>
         </div>
 
         <!-- Slide 9: Divide into 4 -->
-        <div class="slide">
-            <h2 class="slide-title">ถ้าต้องการแบ่งเป็น 4 ส่วนล่ะ? 🧩</h2>
-            <div class="content-area two-column">
-                <div style="text-align: center;">
-                    <span style="font-size: 200px; font-family: 'Comfortaa'; font-weight: bold; color: #bc84ee; line-height: 1;">3</span>
-                    <p style="font-size: 30px; font-weight: bold;">คือจำนวนครั้งที่ต้อง "แบ่งครึ่ง"</p>
-                </div>
-                <div style="background: white; padding: 40px; border-radius: 30px; box-shadow: 0 10px 20px rgba(0,0,0,0.1);">
-                    <h3 style="text-align: left; margin-bottom: 20px;">นำส่วนที่แบ่งแล้ว มาแบ่งซ้ำ!</h3>
-                    <p>1. แบ่งครึ่งเส้นใหญ่ 1 ครั้ง (ได้ 2 ส่วน)</p>
-                    <p>2. นำ 2 ส่วนย่อยที่ได้ มาทำขั้นตอนเดิมเพื่อแบ่งครึ่งอีกส่วนละ 1 ครั้ง</p>
-                    <p style="margin-top: 20px; color: #ef4444; font-weight: bold;">รวมทำทั้งหมด 3 ครั้ง จะได้ 4 ส่วนเท่ากัน</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 10: Activity (มีเฉลยใบงาน) -->
         <div class="slide bg-color-3">
-            <h2 style="font-size: 60px;">กิจกรรม: ใบงานมหัศจรรย์ ✨</h2>
-            <div class="content-area" style="background: rgba(255,255,255,0.2); border-radius: 30px; padding: 40px; width: 90%; margin-top: 20px;">
-                <ul style="list-style: none; text-align: left; display: inline-block;">
-                    <li style="margin-bottom: 15px;"><i class="fa-solid fa-pen" style="margin-right: 15px;"></i> <b>โจทย์:</b> ลากส่วนของเส้นตรง XY 1 เส้นบนใบงาน</li>
-                    <li style="margin-bottom: 15px;"><i class="fa-solid fa-compass" style="margin-right: 15px;"></i> ใช้วงเวียนแบ่งเส้นตรงเป็น <b>4 ส่วนเท่าๆ กัน</b></li>
-                    <li style="margin-bottom: 15px;"><i class="fa-solid fa-comment" style="margin-right: 15px;"></i> เขียนอธิบายขั้นตอนอย่างเป็นลำดับ</li>
-                </ul>
-                
-                <div style="margin-top: 20px; display: flex; flex-direction: column; align-items: center; width: 100%;">
-                    <button class="reveal-btn" style="background: #1e293b; font-size: 24px; padding: 15px 30px;" onclick="document.getElementById('worksheet-answer').style.display = 'block'">💡 กดดูแนวคำตอบอธิบายขั้นตอน</button>
-                    
-                    <div id="worksheet-answer" style="display: none; margin-top: 20px; background: white; color: #1e293b; padding: 25px; border-radius: 20px; text-align: left; font-size: 22px; width: 100%; box-shadow: 0 10px 20px rgba(0,0,0,0.2);">
-                        <b style="color: #ff823a; font-size: 26px;">แนวคำตอบขั้นตอนการสร้าง:</b><br><br>
-                        1. กางวงเวียนให้รัศมียาวเกินครึ่งหนึ่งของเส้น XY ขีดส่วนโค้งตัดกัน เพื่อหาจุดกึ่งกลาง (สมมติให้เป็นจุด M)<br>
-                        2. ลากเส้นตรงผ่านจุดตัด จะทำให้เส้นตรง XY ถูกแบ่งครึ่งเป็น 2 ส่วน คือ XM และ MY<br>
-                        3. ทำซ้ำขั้นตอนเดิม โดยกางวงเวียนแบ่งครึ่งส่วน XM และแบ่งครึ่งส่วน MY อีกครั้ง<br>
-                        4. จะได้จุดกึ่งกลางเพิ่มอีก 2 จุด ทำให้เส้นตรงถูกแบ่งเป็น 4 ส่วนเท่าๆ กันอย่างสมบูรณ์
+            <h2 class="slide-title" style="color: #0369a1;">ถ้าต้องการแบ่งเป็น 4 ส่วนล่ะ? 🧩</h2>
+            <div class="content-area two-column">
+                <div style="text-align: center; background: white; border-radius: 50%; width: 400px; height: 400px; display: flex; flex-direction: column; justify-content: center; align-items: center; box-shadow: 0 20px 40px rgba(14,165,233,0.15); margin: 0 auto;" class="cute-float">
+                    <span style="font-size: 180px; font-family: 'Comfortaa'; font-weight: bold; color: #0ea5e9; line-height: 1;">3</span>
+                    <p style="font-size: 28px; font-weight: bold; color: #0284c7;">คือจำนวนครั้งที่ต้อง<br>"แบ่งครึ่ง"</p>
+                </div>
+                <div style="background: white; padding: 40px; border-radius: 40px; box-shadow: 0 15px 30px rgba(0,0,0,0.05); border: 4px solid #bae6fd;">
+                    <h3 style="text-align: left; margin-bottom: 25px; color: #0284c7; font-size: 32px;">นำส่วนที่แบ่งแล้ว มาแบ่งซ้ำ!</h3>
+                    <p style="margin-bottom: 10px;">🍄 1. แบ่งครึ่งเส้นใหญ่ 1 ครั้ง (ได้ 2 ส่วน)</p>
+                    <p style="margin-bottom: 10px;">🍄 2. นำ 2 ส่วนย่อยที่ได้ มาทำขั้นตอนเดิมเพื่อแบ่งครึ่งอีกส่วนละ 1 ครั้ง</p>
+                    <div style="margin-top: 25px; background: #fce7f3; color: #be185d; font-weight: bold; padding: 20px; border-radius: 20px; text-align: center;">
+                        🎉 รวมทำทั้งหมด 3 ครั้ง จะได้ 4 ส่วนเท่ากัน!
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 11: Q&A (เลื่อนมาไว้ก่อนทดสอบ) -->
-        <div class="slide bg-color-1">
-            <h2 style="font-size: 80px; margin-bottom: 30px;">มีคำถามเพิ่มเติมไหมเอ่ย?</h2>
-            <p style="font-size: 32px; background: white; padding: 20px 40px; border-radius: 50px;">เตรียมตัวทำแบบทดสอบหลังเรียน! 🎉</p>
+        <!-- Slide 10: Activity (มีเฉลยใบงาน) -->
+        <div class="slide">
+            <h2 style="font-size: 60px; color: #db2777;">กิจกรรม: ใบงานมหัศจรรย์ ✨</h2>
+            <div class="content-area" style="background: #fdf2f8; border: 4px dashed #fbcfe8; border-radius: 40px; padding: 40px; width: 90%; margin-top: 20px;">
+                <ul style="list-style: none; text-align: left; display: inline-block;">
+                    <li style="margin-bottom: 15px;"><i class="fa-solid fa-pen" style="margin-right: 15px; color: #f472b6;"></i> <b>โจทย์:</b> ลากส่วนของเส้นตรง XY 1 เส้นบนใบงาน</li>
+                    <li style="margin-bottom: 15px;"><i class="fa-solid fa-compass" style="margin-right: 15px; color: #a78bfa;"></i> ใช้วงเวียนแบ่งเส้นตรงเป็น <b>4 ส่วนเท่าๆ กัน</b></li>
+                    <li style="margin-bottom: 15px;"><i class="fa-solid fa-comment" style="margin-right: 15px; color: #34d399;"></i> เขียนอธิบายขั้นตอนอย่างเป็นลำดับ</li>
+                </ul>
+                
+                <div style="margin-top: 30px; display: flex; flex-direction: column; align-items: center; width: 100%;">
+                    <button class="reveal-btn" style="background: #8b5cf6; box-shadow: 0 5px 0 #6d28d9; font-size: 24px; padding: 15px 40px;" onclick="document.getElementById('worksheet-answer').style.display = 'block'">💡 กดดูแนวคำตอบอธิบายขั้นตอน</button>
+                    
+                    <div id="worksheet-answer" style="display: none; margin-top: 25px; background: white; border: 4px solid #ddd6fe; padding: 30px; border-radius: 30px; text-align: left; font-size: 22px; width: 100%; box-shadow: 0 10px 25px rgba(139,92,246,0.1);">
+                        <b style="color: #8b5cf6; font-size: 28px;">🌸 แนวคำตอบขั้นตอนการสร้าง:</b><br><br>
+                        1. กางวงเวียนให้รัศมียาวเกินครึ่งหนึ่งของเส้น XY ขีดส่วนโค้งตัดกัน เพื่อหาจุดกึ่งกลาง (สมมติให้เป็นจุด M)<br>
+                        2. ลากเส้นตรงผ่านจุดตัด จะทำให้เส้นตรง XY ถูกแบ่งครึ่งเป็น 2 ส่วน คือ XM และ MY<br>
+                        3. ทำซ้ำขั้นตอนเดิม โดยกางวงเวียนแบ่งครึ่งส่วน XM และแบ่งครึ่งส่วน MY อีกครั้ง<br>
+                        4. จะได้จุดกึ่งกลางเพิ่มอีก 2 จุด ทำให้เส้นตรงถูกแบ่งเป็น 4 ส่วนเท่าๆ กันอย่างสมบูรณ์ ✨
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- Slide 12: Post-test (สไลด์สุดท้าย) -->
+        <!-- Slide 11: Q&A -->
+        <div class="slide bg-color-1">
+            <h2 class="cute-float" style="font-size: 85px; margin-bottom: 40px; color: #d97706;">มีคำถามเพิ่มเติมไหมเอ่ย? 🙋‍♀️🙋‍♂️</h2>
+            <p style="font-size: 36px; background: white; padding: 25px 60px; border-radius: 50px; font-weight: bold; color: #b45309; box-shadow: 0 10px 0 #fde68a;">เตรียมตัวทำแบบทดสอบหลังเรียน! 🎉</p>
+        </div>
+
+        <!-- Slide 12: Post-test -->
         <div class="slide">
             <h2 class="slide-title">ทดสอบหลังเรียน (Post-test) 🌟</h2>
             <div class="content-area">
@@ -335,7 +395,7 @@
                             <button class="quiz-btn" data-correct="true">ค. 3 ครั้ง</button>
                             <button class="quiz-btn">ง. 4 ครั้ง</button>
                         </div>
-                        <button class="reveal-btn" onclick="revealAnswer('post-q1')">ดูเฉลย</button>
+                        <button class="reveal-btn" onclick="revealAnswer('post-q1')">✨ ดูเฉลย</button>
                     </div>
                     <!-- Q2 -->
                     <div class="quiz-item">
@@ -346,7 +406,7 @@
                             <button class="quiz-btn">ค. กางให้น้อยกว่าครึ่งหนึ่งของเส้น</button>
                             <button class="quiz-btn">ง. กางเท่าใดก็ได้ตามสะดวก</button>
                         </div>
-                        <button class="reveal-btn" onclick="revealAnswer('post-q2')">ดูเฉลย</button>
+                        <button class="reveal-btn" onclick="revealAnswer('post-q2')">✨ ดูเฉลย</button>
                     </div>
                 </div>
             </div>
@@ -364,16 +424,16 @@
 
     <!-- Interactive Scripts -->
     <script>
-        // ระบบย่อขยายหน้าจออัตโนมัติ (Auto-Scale) ให้พอดีกับทุกหน้าจอ
+        // ระบบย่อขยายหน้าจออัตโนมัติ
         function resizePresentation() {
             const presentation = document.querySelector('.presentation');
-            const scaleX = window.innerWidth / 1300; // เผื่อขอบไว้เล็กน้อย
+            const scaleX = window.innerWidth / 1300; 
             const scaleY = window.innerHeight / 740;
             const scale = Math.min(scaleX, scaleY);
             presentation.style.transform = `scale(${scale})`;
         }
         window.addEventListener('resize', resizePresentation);
-        resizePresentation(); // เรียกใช้งานทันทีเมื่อโหลดหน้าเว็บ
+        resizePresentation(); 
 
         // Slide Navigation Logic
         let currentSlideIndex = 0;
@@ -407,7 +467,6 @@
             }
         }
 
-        // Keyboard Navigation
         document.addEventListener('keydown', (e) => {
             if(e.key === 'ArrowRight' || e.key === 'Space') nextSlide();
             if(e.key === 'ArrowLeft') prevSlide();
@@ -427,7 +486,7 @@
         }
 
         // Chocolate Animation Logic
-        let chocoLevel = 1; // 1=1 piece, 2=2 pieces, 3=4 pieces
+        let chocoLevel = 1; 
         function splitChocolate() {
             const board = document.getElementById('choco-board');
             if (chocoLevel === 1) {
@@ -448,7 +507,6 @@
             chocoLevel = 1;
         }
 
-        // Initialize
         updateSlides();
     </script>
 </body>
