@@ -402,7 +402,35 @@
             </div>
         </div>
 
-        <!-- Slide 10: Activity (มีเฉลยใบงานผ่านป๊อปอัป) -->
+        <!-- Slide 10: Activity 1 (Pair Worksheet - เลื่อนขึ้นมาก่อน) -->
+        <div class="slide">
+            <h2 style="font-size: 55px; color: #4338ca;">กิจกรรมคู่หู: รวมพลังเวทมนตร์วงเวียน 🤝</h2>
+            <div class="content-area" style="background: #e0e7ff; border: 4px dashed #c4b5fd; border-radius: 40px; padding: 40px; width: 90%; margin-top: 20px;">
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 25px; text-align: left; margin-bottom: 25px; width: 100%;">
+                    <div style="background: white; padding: 25px; border-radius: 25px; border: 3px solid #ec4899; box-shadow: 0 10px 20px rgba(0,0,0,0.05);">
+                        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                            <i class="fa-solid fa-compass" style="font-size: 40px; color: #ec4899;"></i>
+                            <b style="color: #db2777; font-size: 28px;">คนที่ 1: ผู้ใช้วงเวียน</b>
+                        </div>
+                        <p style="font-size: 20px;">ใช้วงเวียนและสันตรง แบ่งเส้นตรงเป็น 4 ส่วนให้แม่นยำที่สุด <br><span style="color: #ef4444; font-size: 16px;">(ห้ามลบรอยตัดวงเวียนเด็ดขาด)</span></p>
+                    </div>
+                    <div style="background: white; padding: 25px; border-radius: 25px; border: 3px solid #0ea5e9; box-shadow: 0 10px 20px rgba(0,0,0,0.05);">
+                        <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
+                            <i class="fa-solid fa-ruler" style="font-size: 40px; color: #0ea5e9;"></i>
+                            <b style="color: #0284c7; font-size: 28px;">คนที่ 2: นักตรวจสอบ</b>
+                        </div>
+                        <p style="font-size: 20px;">ใช้ไม้บรรทัดวัดระยะแต่ละส่วน ตรวจสอบความถูกต้อง และช่วยกันสรุปขั้นตอน</p>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 10px; display: flex; justify-content: center; width: 100%;">
+                    <button class="reveal-btn cute-float-delay" style="background: #6366f1; box-shadow: 0 5px 0 #4f46e5; font-size: 24px; padding: 15px 40px;" onclick="showPairAnswerModal()">💡 กดดูแนวคำตอบกิจกรรมคู่หู</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Activity 2 (Individual Worksheet) -->
         <div class="slide">
             <h2 style="font-size: 60px; color: #db2777;">กิจกรรม: ใบงานมหัศจรรย์ ✨</h2>
             <div class="content-area" style="background: #fdf2f8; border: 4px dashed #fbcfe8; border-radius: 40px; padding: 40px; width: 90%; margin-top: 20px;">
@@ -413,19 +441,18 @@
                 </ul>
                 
                 <div style="margin-top: 30px; display: flex; justify-content: center; width: 100%;">
-                    <!-- เปลี่ยนมาใช้ showAnswerModal() แทนกล่องแสดงผลด้านล่างเพื่อแก้ปัญหาล้นจอ -->
                     <button class="reveal-btn cute-float" style="background: #8b5cf6; box-shadow: 0 5px 0 #6d28d9; font-size: 24px; padding: 15px 40px;" onclick="showAnswerModal()">💡 กดดูแนวคำตอบอธิบายขั้นตอน</button>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 11: Q&A -->
+        <!-- Slide 12: Q&A -->
         <div class="slide bg-color-1">
             <h2 class="cute-float" style="font-size: 85px; margin-bottom: 40px; color: #d97706;">มีคำถามเพิ่มเติมไหมเอ่ย? 🙋‍♀️🙋‍♂️</h2>
             <p style="font-size: 36px; background: white; padding: 25px 60px; border-radius: 50px; font-weight: bold; color: #b45309; box-shadow: 0 10px 0 #fde68a;">เตรียมตัวทำแบบทดสอบหลังเรียน! 🎉</p>
         </div>
 
-        <!-- Slide 12: Post-test -->
+        <!-- Slide 13: Post-test -->
         <div class="slide">
             <h2 class="slide-title">ทดสอบหลังเรียน (Post-test) 🌟</h2>
             <div class="content-area">
@@ -461,7 +488,7 @@
         </div>
         <div class="progress-bar" id="progress"></div>
 
-        <!-- Custom Modal Popup สำหรับเฉลยใบงาน -->
+        <!-- Custom Modal Popup สำหรับเฉลยใบงานเดี่ยว -->
         <div class="alert-overlay" id="answer-modal">
             <div class="alert-content">
                 <div class="alert-title">🌸 แนวคำตอบขั้นตอนการสร้าง:</div>
@@ -472,6 +499,23 @@
                     4. จะได้จุดกึ่งกลางเพิ่มอีก 2 จุด ทำให้เส้นตรงถูกแบ่งเป็น 4 ส่วนเท่าๆ กันอย่างสมบูรณ์ ✨
                 </div>
                 <button class="alert-close-btn" onclick="closeAnswerModal()">เข้าใจแล้ว 💖</button>
+            </div>
+        </div>
+
+        <!-- Custom Modal Popup สำหรับเฉลยใบงานคู่ -->
+        <div class="alert-overlay" id="pair-answer-modal">
+            <div class="alert-content" style="border-color: #c4b5fd;">
+                <div class="alert-title" style="color: #6366f1;">🤝 แนวคำตอบกิจกรรมคู่หู:</div>
+                <div class="alert-text">
+                    <b style="color: #ec4899;">ผู้ใช้วงเวียน (คนที่ 1):</b><br>
+                    ต้องมีจุดตัดจากการกางวงเวียนทั้งหมด <b>3 จุดหลัก</b> เพื่อทำให้เกิดเส้นตรงที่แบ่งเป็น 4 ส่วนเท่าๆ กัน<br><br>
+                    
+                    <b style="color: #0ea5e9;">นักตรวจสอบ (คนที่ 2):</b><br>
+                    เมื่อใช้ไม้บรรทัดวัดระยะห่าง ตัวเลขความยาวของทั้ง 4 ส่วนจะต้อง <b style="color: #ef4444;">"เท่ากันเป๊ะทุกมิลลิเมตร"</b><br><br>
+
+                    <b style="color: #10b981;">สรุปขั้นตอน:</b> แบ่งครึ่งเส้นตรงหลักก่อน 1 ครั้ง (ได้ 2 ส่วน) จากนั้นนำแต่ละส่วนมาแบ่งครึ่งซ้ำด้วยวิธีเดิม (รวมได้ 4 ส่วน) ✨
+                </div>
+                <button class="alert-close-btn" style="background: #8b5cf6; box-shadow: 0 5px 0 #6d28d9;" onclick="closePairAnswerModal()">เข้าใจแล้ว 💖</button>
             </div>
         </div>
 
@@ -559,7 +603,7 @@
             chocoLevel = 1;
         }
 
-        // Custom Modal Logic สำหรับหน้าใบงาน
+        // Custom Modal Logic สำหรับหน้าใบงานเดี่ยว
         function showAnswerModal() {
             const modal = document.getElementById('answer-modal');
             modal.style.display = 'flex';
@@ -569,7 +613,20 @@
         function closeAnswerModal() {
             const modal = document.getElementById('answer-modal');
             modal.classList.remove('show');
-            setTimeout(() => modal.style.display = 'none', 300); // รอจังหวะแอนิเมชันปิด
+            setTimeout(() => modal.style.display = 'none', 300);
+        }
+
+        // Custom Modal Logic สำหรับหน้าใบงานคู่หู
+        function showPairAnswerModal() {
+            const modal = document.getElementById('pair-answer-modal');
+            modal.style.display = 'flex';
+            setTimeout(() => modal.classList.add('show'), 10);
+        }
+
+        function closePairAnswerModal() {
+            const modal = document.getElementById('pair-answer-modal');
+            modal.classList.remove('show');
+            setTimeout(() => modal.style.display = 'none', 300);
         }
 
         updateSlides();
